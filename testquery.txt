@@ -1,0 +1,1 @@
+select    protocol,    sum(inoctets + outoctets) Bytes    from protocol_traffic    where (router=167782434 and interface=9) and TimeStamp > 1392729900 - 900 and TimeStamp <= 1392758700 and protocol not in (0,4,1,2)    group by protocol    having Bytes > 0    order by Bytes desc    limit 12;
