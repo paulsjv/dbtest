@@ -1,16 +1,23 @@
 package com.ca.im.ra.dbtest.database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class DatabaseQuery {
+public class DatabaseQuery 
+{
+	private DatabaseConnector connector;
 
 	public DatabaseQuery(DatabaseConnector connector) {
-		// TODO Auto-generated constructor stub
+		this.connector = connector;
 	}
 
-	public ResultSet runQuery(String query) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultSet runQuery(String query) throws SQLException {
+		return prepareAndRunQuery(query);
 	}
-
+	
+	protected ResultSet prepareAndRunQuery(String query) throws SQLException {
+		PreparedStatement p = connector.prepareStatement(query);
+		return p.executeQuery();
+	}
 }
