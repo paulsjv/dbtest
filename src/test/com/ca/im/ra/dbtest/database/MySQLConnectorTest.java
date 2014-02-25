@@ -18,17 +18,40 @@ import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
 import com.ca.im.ra.dbtest.database.impl.MySQLConnector;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class MySQLConnectorTest {
 	
-	public MySQLConnector dbConnector;
-	public DataSource mockDataSource;
+	public MockMySQLConnector dbConnector;
+	public MysqlDataSource mockDataSource;
 	public Connection mockConnection;
+	
+	public class MockMySQLConnector extends MySQLConnector {
+		
+		public MockMySQLConnector(String ipAddress, String databaseName,
+				String username, String password, int port, int timeout) {
+			super(ipAddress, databaseName, username, password, port, timeout);
+		}
+
+		public void setConnection(Connection connection) {
+			super.setConnection(connection);
+		}
+		
+		public void setMySQLDataSource(MysqlDataSource ds) {
+			super.setMySQLDataSource(ds);
+		}
+		
+		@Override
+		protected void create() throws SQLException {
+			super.setMySQLDataSource(mockDataSource);
+		}
+		
+	}
 	
 	@Before
 	public void setUp() throws SQLException {
-		dbConnector = new MySQLConnector("10.0.2.118", "archive15", "netqos", "netqos", 3307);
-		mockDataSource = Mockito.mock(DataSource.class);
+		dbConnector = new MockMySQLConnector("10.0.2.118", "archive15", "netqos", "netqos", 3307, 12345);
+		mockDataSource = Mockito.mock(MysqlDataSource.class);
 		mockConnection = Mockito.mock(Connection.class);
 		BDDMockito.given(mockDataSource.getConnection()).willReturn(mockConnection);
 		dbConnector.setMySQLDataSource(mockDataSource);
@@ -72,11 +95,16 @@ public class MySQLConnectorTest {
 	
 	@Test
 	public void connectionShouldBeDifferentObject() throws SQLException {		
-		// given: our connection is invalid
+		// given: we have a datasource and our connection is invalid
+		MockMySQLConnector mockMysqlConnector = new MockMySQLConnector("", "", "", "", 1, 1);
 		BDDMockito.given(mockConnection.isClosed()).willReturn(true);
+		mockMysqlConnector.setConnection(mockConnection);
+		
+		Connection mockNewConnection = Mockito.mock(Connection.class);
+		BDDMockito.given(mockDataSource.getConnection()).willReturn(mockNewConnection);
 		
 		// when: connect is called
-		Connection validConnection = dbConnector.connect();
+		Connection validConnection = mockMysqlConnector.connect();
 		
 		// then: return new valid connection
 		Assert.assertNotEquals(mockConnection, validConnection);
