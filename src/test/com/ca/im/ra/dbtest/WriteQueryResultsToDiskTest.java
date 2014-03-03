@@ -7,22 +7,19 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-
 public class WriteQueryResultsToDiskTest {
 
 	@Test
 	public void checkIfFileExists() throws IOException {
 		// given - a file name if file exists in root of project
-		String fileName = "file.txt";
-		WirteQueryResultsToDisk write = new WirteQueryResultsToDisk();
+		File outputFile = new File("OutputFile.txt");
+		WriteQueryResultsToDisk write = new WriteQueryResultsToDisk();
 		
 		// when - checking if file exists
-		write.writeResults(fileName, "writing to file");
+		write.writeResults(outputFile, "writing to file");
 		
 		// then - return true
-		File resultsFile = new File(fileName);
-		assertTrue("file should exist", resultsFile.exists());
-		resultsFile.delete();
+		assertTrue("file should exist", outputFile.exists());
+		outputFile.delete();
 	}
-	
 }
