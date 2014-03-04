@@ -42,7 +42,7 @@ public class Director {
 			if(!resultSetsIdentical)
 			{
 				identicalData = false;
-				writer.writeResults(outputFile, Integer.toString(i+1)+ " - " + queries.get(i));
+				writer.writeResults(outputFile, Integer.toString(i+1)+ " - " + queries.get(i) + "\n");
 				
 				writer.writeResults(outputFile, "EXPECTED:\n" + ResultSetToString.resultSetToString(expectedResultSet) + "\n");
 				writer.writeResults(outputFile, "ACTUAL:\n" + ResultSetToString.resultSetToString(actualResultSet) + "\n");
