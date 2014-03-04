@@ -21,7 +21,7 @@ public class ResultSetToString {
 			throws SQLException {
 		String result = "";
 		while (resultSet.next()) {
-			for (int i=0; i<numCol; i++) {			
+			for (int i=1; i<=numCol; i++) {			
 				result += getColumnValue(resultSet, i);
 			}
 		}
@@ -43,7 +43,7 @@ public class ResultSetToString {
 		String result = "";
 		numCol = resultSet.getMetaData().getColumnCount();
 		
-		for (int i=0; i<numCol; i++) {
+		for (int i=1; i<=numCol; i++) {
 			result += getColumnName(resultSet, i);
 		}
 		return result;
@@ -75,11 +75,11 @@ public class ResultSetToString {
 	}
 
 	private static boolean isLastColumn(int i) {
-		return (i+1) == numCol;
+		return i == numCol;
 	}
 
 	private static boolean hasMoreColumns(int i) {
-		return (i+1) < numCol;
+		return i < numCol;
 	}
 
 }

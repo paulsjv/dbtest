@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.ca.im.ra.dbtest.CompareResultSets;
 import com.ca.im.ra.dbtest.ReadQueryInputFile;
+import com.ca.im.ra.dbtest.ResultSetToString;
 import com.ca.im.ra.dbtest.WriteQueryResultsToDisk;
 import com.ca.im.ra.dbtest.database.DatabaseQuery;
 
@@ -42,6 +43,9 @@ public class Director {
 			{
 				identicalData = false;
 				writer.writeResults(outputFile, Integer.toString(i+1)+ " - " + queries.get(i));
+				
+				writer.writeResults(outputFile, "Expected:\n" + ResultSetToString.resultSetToString(expectedResultSet) + "\n");
+				writer.writeResults(outputFile, "Actual:\n" + ResultSetToString.resultSetToString(actualResultSet) + "\n");
 			}
 
 			// if no difference, continue

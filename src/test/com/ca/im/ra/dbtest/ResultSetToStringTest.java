@@ -35,10 +35,10 @@ public class ResultSetToStringTest {
 		
 		BDDMockito.given(mockResultSet.getMetaData()).willReturn(mockResultSetMetaData);
 		BDDMockito.given(mockResultSetMetaData.getColumnCount()).willReturn(2);
-		BDDMockito.given(mockResultSetMetaData.getColumnName(0)).willReturn("column1");
-		BDDMockito.given(mockResultSetMetaData.getColumnName(1)).willReturn("column2");
-		BDDMockito.given(mockResultSet.getString(0)).willReturn("value1");
-		BDDMockito.given(mockResultSet.getString(1)).willReturn("value2");
+		BDDMockito.given(mockResultSetMetaData.getColumnName(1)).willReturn("column1");
+		BDDMockito.given(mockResultSetMetaData.getColumnName(2)).willReturn("column2");
+		BDDMockito.given(mockResultSet.getString(1)).willReturn("value1");
+		BDDMockito.given(mockResultSet.getString(2)).willReturn("value2");
 		
 		String expectedResultSet = "column1\t\tcolumn2\nvalue1\t\tvalue2\nvalue1\t\tvalue2";
 		
