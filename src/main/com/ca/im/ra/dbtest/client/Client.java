@@ -49,7 +49,6 @@ public class Client {
 			DatabaseQuery newQuery = new DatabaseQuery(newConnection);
 
 			Director.validateData(oldQuery, newQuery, queryInputFileName);
-
 		}
 	}
 }
